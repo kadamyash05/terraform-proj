@@ -25,6 +25,11 @@ terraform should be installed in your ec2 machine now, check the same using
 ```bash
 terraform -v
 ```
+it should look something like this
+![image](https://github.com/user-attachments/assets/17d93e42-2cb9-4018-ba56-589c2beaabf7)
+
+terraform is installed now
+
 
 
 
