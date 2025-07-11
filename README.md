@@ -1,75 +1,78 @@
-# terraform-proj
-A complete terraform project for a beginner
+# 🚀 Terraform Project for Beginners
 
+This is a beginner-friendly project to provision AWS resources using Terraform from an EC2 instance.
 
-create an EC2 instance 
-![image](https://github.com/user-attachments/assets/cc878a5f-48dc-4ba0-9670-7e559a21610d)
+---
 
-after the setup your dashboard should look something like this
+## 🛠️ Complete Setup Instructions
 
-then go on to terraform offical site to install terraform 
-https://developer.hashicorp.com/terraform/install
+### 1. Launch an EC2 Instance
 
-now its time to install terraform
+- Go to AWS Console and launch an Ubuntu EC2 instance.
+- SSH into the instance after launch.
 
-ssh into your ec2 and paste these commands
+---
 
+### 2. Install Terraform on EC2
+
+SSH into your EC2 and run the following:
 
 ```bash
 wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(grep -oP '(?<=UBUNTU_CODENAME=).*' /etc/os-release || lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-sudo apt update && sudo apt install terraform
-```
-terraform should be installed in your ec2 machine now, check the same using 
-
-```bash
+sudo apt update && sudo apt install terraform -y
 terraform -v
 ```
-it should look something like this
-![image](https://github.com/user-attachments/assets/17d93e42-2cb9-4018-ba56-589c2beaabf7)
 
-terraform is installed now
+Expected output:  
+![Terraform Version](https://github.com/user-attachments/assets/17d93e42-2cb9-4018-ba56-589c2beaabf7)
 
-create a folder now named terraform in the ec2 instance
+---
 
-make the file in that folder called s3.tf
+### 3. Set Up Terraform Project
 
-now copy paste the content from s3.tf folder in your file and make your you change your s3 bucket name as it should be unique globally
+```bash
+mkdir terraform && cd terraform
+```
 
-run the following commands
+Create a file `s3.tf` and paste this content:
 
-now for terraform to know which provider to use create a terraform.tf file
+```hcl
+resource "aws_s3_bucket" "testbucket" {
+  bucket = "<your-unique-bucket-name>"
+
+  tags = {
+    Name = "<your-unique-bucket-name>"
+  }
+}
+```
+
+Create a file `terraform.tf` and paste this content:
+
+```hcl
+provider "aws" {
+  region     = "us-east-1"
+  access_key = "<YOUR_ACCESS_KEY>"
+  secret_key = "<YOUR_SECRET_KEY>"
+}
+```
+
+Replace `<your-unique-bucket-name>`, `<YOUR_ACCESS_KEY>`, and `<YOUR_SECRET_KEY>` with your actual values.
+
+---
+
+### 4. Deploy Using Terraform
 
 ```bash
 terraform init
-```
-this is initialize terraform in your folder, and aws will be used as a provider, you can copy paste the same from my terrafrom.tf file
-
-now install aws cli from the documentation, once installed, now time to configure aws account to ec2 machine
-
-```bash
-aws configure 
-```
-
-this will ask for access key and secret key, you'll get the same from your comsole in security and credential section
-
-```bash
 terraform validate
-```
-this is used to check if the terraform file is correct
-
-```bash
-terraform plan 
-```
-this will give you a structure plan of what terraform will create
-
-```bash
+terraform plan
 terraform apply
 ```
 
-this will apply the changes and create the resource
+---
 
-once done a s3 bicket should be created
+### 5. Verify S3 Bucket
+
+After successful apply, you should see the bucket created in your AWS S3 Console.  
 <img width="1743" height="46" alt="image" src="https://github.com/user-attachments/assets/68167295-3306-47d1-887c-01a77020f955" />
-
-
