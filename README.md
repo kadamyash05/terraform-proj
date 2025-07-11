@@ -1,6 +1,6 @@
 # 🚀 Terraform Project 
 
-This is a beginner-friendly project to provision AWS resources using Terraform from an EC2 instance.
+This is a project to provision AWS resources using Terraform from an EC2 instance.
 
 ---
 
@@ -88,3 +88,119 @@ terraform apply
 
 After successful apply, you should see the bucket created in your AWS S3 Console.  
 <img width="1743" height="46" alt="image" src="https://github.com/user-attachments/assets/68167295-3306-47d1-887c-01a77020f955" />
+
+
+# 🚀 Terraform EC2 Setup from Local Machine
+
+This guide will help you provision an EC2 instance on AWS using Terraform from your **local machine (VS Code terminal)** step-by-step.
+
+---
+
+Now lets create an EC2 instance using terraform and this time from your local machine-
+## 📁 Project Setup Instructions
+
+### 1. Create a Project Folder
+
+Create a folder and open VS Code and execute the following commands from VS Code terminal-
+
+---
+
+### 2. Install Terraform
+
+Go to the official site and install Terraform based on your OS:  
+👉 https://developer.hashicorp.com/terraform/install
+
+To verify installation:
+
+```bash
+terraform -v
+```
+
+You should see the installed Terraform version.
+
+---
+
+### 3. Install AWS CLI
+
+Follow the instructions from AWS documentation:  
+👉 https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html
+
+After installation, verify using:
+
+```bash
+aws --version
+```
+
+---
+
+### 4. Configure AWS Credentials
+
+Run the following command:
+
+```bash
+aws configure
+```
+
+It will prompt for:
+
+- AWS Access Key ID
+- AWS Secret Access Key
+- Default region name (e.g., `us-east-1`)
+- Default output format (can leave blank or set `json`)
+
+These credentials will be saved locally at `~/.aws/credentials`.
+
+---
+
+### 5. Add Terraform Files
+
+Use the following files from this repository (already pushed):
+
+#### ✅ `terraform.tf`  
+Sets up the AWS provider using credentials from your `aws configure`.
+
+#### ✅ `provider.tf`  
+Specifies the AWS region to use (e.g., `us-east-1`).
+
+#### ✅ `ec2.tf`  
+Contains the Terraform resource to create an EC2 instance. You can copy this from your repo and modify as needed (e.g., AMI, instance type, tags, etc).
+
+---
+
+### 6. Terraform Commands
+
+Run the following **in the terminal** (inside your project folder):
+
+```bash
+terraform init
+```
+➡️ Initializes the Terraform working directory and downloads the AWS provider plugin.
+
+```bash
+terraform validate
+```
+➡️ Checks your `.tf` files for syntax errors.
+
+```bash
+terraform plan
+```
+➡️ Shows what Terraform will create on AWS (a dry run).
+
+```bash
+terraform apply
+```
+➡️ Applies the changes — i.e., actually creates the EC2 instance on AWS. Confirm with `yes` when prompted.
+
+---
+
+## ✅ After Applying
+
+Once complete:
+
+- You’ll see the EC2 instance details in the terminal.
+- You can go to the **AWS EC2 Console** and verify the instance has been created.
+
+---
+
+<img width="1555" height="231" alt="image" src="https://github.com/user-attachments/assets/0468326b-5e2f-438e-9260-5053dda805c5" />
+
