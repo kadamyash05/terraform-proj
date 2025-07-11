@@ -38,10 +38,12 @@ now copy paste the content from s3.tf folder in your file and make your you chan
 
 run the following commands
 
+now for terraform to know which provider to use create a terraform.tf file
+
 ```bash
 terraform init
 ```
-this is initialize terraform in your folder
+this is initialize terraform in your folder, and aws will be used as a provider
 
 now install aws cli from the documentation, once installed, now time to configure aws account to ec2 machine
 
