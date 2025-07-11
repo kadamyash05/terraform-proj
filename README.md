@@ -1,4 +1,4 @@
-# 🚀 Terraform Project for Beginners
+# 🚀 Terraform Project 
 
 This is a beginner-friendly project to provision AWS resources using Terraform from an EC2 instance.
 
@@ -63,14 +63,26 @@ Replace `<your-unique-bucket-name>`, `<YOUR_ACCESS_KEY>`, and `<YOUR_SECRET_KEY>
 
 ### 4. Deploy Using Terraform
 
+to initilize terraform in your project -
 ```bash
 terraform init
+```
+
+to validate is terraform file is correct-
+```bash
 terraform validate
+```
+
+to see how terraform will create a structural plan based on the file-
+```bash
 terraform plan
+```
+
+to apply changes and create the resources-
+```bash
 terraform apply
 ```
 
----
 
 ### 5. Verify S3 Bucket
 
