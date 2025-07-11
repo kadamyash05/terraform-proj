@@ -43,7 +43,7 @@ now for terraform to know which provider to use create a terraform.tf file
 ```bash
 terraform init
 ```
-this is initialize terraform in your folder, and aws will be used as a provider
+this is initialize terraform in your folder, and aws will be used as a provider, you can copy paste the same from my terrafrom.tf file
 
 now install aws cli from the documentation, once installed, now time to configure aws account to ec2 machine
 
