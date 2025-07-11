@@ -1,21 +1,22 @@
-# 🚀 Terraform Project 
+# Terraform Project
 
-This is a project to provision AWS resources using Terraform from an EC2 instance.
+This project provisions AWS resources using Terraform in two environments:
+
+1. From an EC2 instance (remote setup)
+2. From your local machine using the VS Code terminal
 
 ---
 
-## 🛠️ Complete Setup Instructions
+## Part 1: Provisioning an S3 Bucket from an EC2 Instance
 
 ### 1. Launch an EC2 Instance
 
-- Go to AWS Console and launch an Ubuntu EC2 instance.
-- SSH into the instance after launch.
+- Go to the AWS Console and launch an Ubuntu EC2 instance.
+- After it's running, SSH into the instance.
 
----
+### 2. Install Terraform on the EC2 Instance
 
-### 2. Install Terraform on EC2
-
-SSH into your EC2 and run the following:
+Run the following commands inside the EC2 terminal:
 
 ```bash
 wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
@@ -24,18 +25,17 @@ sudo apt update && sudo apt install terraform -y
 terraform -v
 ```
 
-Expected output:  
-![Terraform Version](https://github.com/user-attachments/assets/17d93e42-2cb9-4018-ba56-589c2beaabf7)
+This installs Terraform and verifies the version.
 
----
+### 3. Set Up the Terraform Project on EC2
 
-### 3. Set Up Terraform Project
+Create a project folder and move into it:
 
 ```bash
 mkdir terraform && cd terraform
 ```
 
-Create a file `s3.tf` and paste this content:
+Create a file called `s3.tf` and paste the following content:
 
 ```hcl
 resource "aws_s3_bucket" "testbucket" {
@@ -47,7 +47,7 @@ resource "aws_s3_bucket" "testbucket" {
 }
 ```
 
-Create a file `terraform.tf` and paste this content:
+Create another file `terraform.tf` and add this:
 
 ```hcl
 provider "aws" {
@@ -57,150 +57,117 @@ provider "aws" {
 }
 ```
 
-Replace `<your-unique-bucket-name>`, `<YOUR_ACCESS_KEY>`, and `<YOUR_SECRET_KEY>` with your actual values.
+Replace placeholders with your actual AWS credentials and unique bucket name.
 
----
+### 4. Run Terraform Commands
 
-### 4. Deploy Using Terraform
-
-to initilize terraform in your project -
 ```bash
 terraform init
 ```
+Initializes the working directory.
 
-to validate is terraform file is correct-
 ```bash
 terraform validate
 ```
+Validates the configuration syntax.
 
-to see how terraform will create a structural plan based on the file-
 ```bash
 terraform plan
 ```
+Displays what Terraform will do.
 
-to apply changes and create the resources-
 ```bash
 terraform apply
 ```
-
+Applies the configuration and provisions the S3 bucket.
 
 ### 5. Verify S3 Bucket
 
-After successful apply, you should see the bucket created in your AWS S3 Console.  
-<img width="1743" height="46" alt="image" src="https://github.com/user-attachments/assets/68167295-3306-47d1-887c-01a77020f955" />
-
-
-# 🚀 Terraform EC2 Setup from Local Machine
-
-This guide will help you provision an EC2 instance on AWS using Terraform from your **local machine (VS Code terminal)** step-by-step.
+Check the AWS S3 Console to confirm the bucket has been created.  
+![S3 Bucket](https://github.com/user-attachments/assets/68167295-3306-47d1-887c-01a77020f955)
 
 ---
 
-Now lets create an EC2 instance using terraform and this time from your local machine-
-## 📁 Project Setup Instructions
+## Part 2: Creating an EC2 Instance from Local Machine (VS Code Terminal)
 
-### 1. Create a Project Folder
+### 1. Set Up the Project
 
-Create a folder and open VS Code and execute the following commands from VS Code terminal-
-
----
+Create a folder, open it in VS Code, and initialize the terminal.
 
 ### 2. Install Terraform
 
-Go to the official site and install Terraform based on your OS:  
-👉 https://developer.hashicorp.com/terraform/install
+Install Terraform from the official documentation:  
+https://developer.hashicorp.com/terraform/install
 
-To verify installation:
+Verify installation:
 
 ```bash
 terraform -v
 ```
 
-You should see the installed Terraform version.
-
----
-
 ### 3. Install AWS CLI
 
-Follow the instructions from AWS documentation:  
-👉 https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html
+Install AWS CLI from:  
+https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html
 
-After installation, verify using:
+Verify installation:
 
 ```bash
 aws --version
 ```
 
----
+### 4. Configure AWS CLI
 
-### 4. Configure AWS Credentials
-
-Run the following command:
+Run:
 
 ```bash
 aws configure
 ```
 
-It will prompt for:
+Provide:
 
-- AWS Access Key ID
-- AWS Secret Access Key
-- Default region name (e.g., `us-east-1`)
-- Default output format (can leave blank or set `json`)
+- AWS Access Key ID  
+- AWS Secret Access Key  
+- Default region (e.g., us-east-1)  
+- Output format (can leave empty or use `json`)
 
-These credentials will be saved locally at `~/.aws/credentials`.
+This stores credentials in `~/.aws/credentials`.
 
----
+### 5. Use Existing Terraform Files
 
-### 5. Add Terraform Files
+Use the following files already available in this repo:
 
-Use the following files from this repository (already pushed):
+- `terraform.tf`: Sets the AWS provider block.
+- `provider.tf`: Specifies the region.
+- `ec2.tf`: Defines the EC2 instance to be created.
 
-#### ✅ `terraform.tf`  
-Sets up the AWS provider using credentials from your `aws configure`.
+Modify these files as needed (e.g., AMI ID, instance type).
 
-#### ✅ `provider.tf`  
-Specifies the AWS region to use (e.g., `us-east-1`).
+### 6. Execute Terraform Commands
 
-#### ✅ `ec2.tf`  
-Contains the Terraform resource to create an EC2 instance. You can copy this from your repo and modify as needed (e.g., AMI, instance type, tags, etc).
-
----
-
-### 6. Terraform Commands
-
-Run the following **in the terminal** (inside your project folder):
+From your project directory, run:
 
 ```bash
 terraform init
 ```
-➡️ Initializes the Terraform working directory and downloads the AWS provider plugin.
+Initializes the project.
 
 ```bash
 terraform validate
 ```
-➡️ Checks your `.tf` files for syntax errors.
+Validates syntax.
 
 ```bash
 terraform plan
 ```
-➡️ Shows what Terraform will create on AWS (a dry run).
+Previews changes.
 
 ```bash
 terraform apply
 ```
-➡️ Applies the changes — i.e., actually creates the EC2 instance on AWS. Confirm with `yes` when prompted.
+Applies the plan and creates the EC2 instance.
 
----
+### 7. Verify EC2 Instance
 
-## ✅ After Applying
-
-Once complete:
-
-- You’ll see the EC2 instance details in the terminal.
-- You can go to the **AWS EC2 Console** and verify the instance has been created.
-
----
-
-<img width="1555" height="231" alt="image" src="https://github.com/user-attachments/assets/0468326b-5e2f-438e-9260-5053dda805c5" />
-
+Go to the AWS EC2 Console and check that the instance has been created.  
+![EC2](https://github.com/user-attachments/assets/0468326b-5e2f-438e-9260-5053dda805c5)
