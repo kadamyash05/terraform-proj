@@ -30,6 +30,42 @@ it should look something like this
 
 terraform is installed now
 
+create a folder now named terraform in the ec2 instance
 
+make the file in that folder called s3.tf
 
+now copy paste the content from s3.tf folder in your file and make your you change your s3 bucket name as it should be unique globally
+
+run the following commands
+
+```bash
+terraform init
+```
+this is initialize terraform in your folder
+
+now install aws cli from the documentation, once installed, now time to configure aws account to ec2 machine
+
+```bash
+aws configure 
+```
+
+this will ask for access key and secret key, you'll get the same from your comsole in security and credential section
+
+```bash
+terraform validate
+```
+this is used to check if the terraform file is correct
+
+```bash
+terraform plan 
+```
+this will give you a structure plan of what terraform will create
+
+```bash
+terraform apply
+```
+
+this will apply the changes and create the resource
+
+once done a s3 bicket should be created
 
