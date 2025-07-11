@@ -68,4 +68,6 @@ terraform apply
 this will apply the changes and create the resource
 
 once done a s3 bicket should be created
+<img width="1743" height="46" alt="image" src="https://github.com/user-attachments/assets/68167295-3306-47d1-887c-01a77020f955" />
+
 
