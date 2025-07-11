@@ -128,10 +128,17 @@ Provide:
 
 - AWS Access Key ID  
 - AWS Secret Access Key  
-- Default region (e.g., us-east-1)  
-- Output format (can leave empty or use `json`)
 
 This stores credentials in `~/.aws/credentials`.
+
+Before provisioning an EC2 instance, generate an SSH key pair:
+
+```bash
+ssh-keygen 
+```
+
+- When prompted, save the key to `~/.ssh/id_rsa` (default) or specify a path.
+- Can name the file like terraec2
 
 ### 5. Use Existing Terraform Files
 
